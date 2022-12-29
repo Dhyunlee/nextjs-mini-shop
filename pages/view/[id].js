@@ -1,15 +1,27 @@
-import { useRouter } from "next/dist/client/router";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+import ProdItem from "../../src/components/ProdItem";
 
-function Detail() {
+function ProdDetail() {
+  const [item, setItem] = useState({});
   const router = useRouter();
   const { id } = router.query;
-  console.log(router.query);
+  const API_URL = `https://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+
+  const getDetail = useCallback(async () => {
+    await axios.get(`${API_URL}`).then(res => setItem(res.data))
+  }, [API_URL])
+
+  useEffect(() => {
+    if(id && id > 0) {
+      getDetail();
+    }
+  }, [id, getDetail]);
+
   return (
-    <div>
-      <h1>Detail({id}) Page</h1>
-      <p>This is Detail({id}) page.</p>
-    </div>
+    item && <ProdItem item={item}/>
   );
 }
 
-export default Detail;
+export default ProdDetail;
