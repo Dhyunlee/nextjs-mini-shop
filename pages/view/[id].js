@@ -1,27 +1,34 @@
 import axios from "axios";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import Head from "next/head";
 import ProdItem from "../../src/components/ProdItem";
 
-function ProdDetail() {
-  const [item, setItem] = useState({});
-  const router = useRouter();
-  const { id } = router.query;
-  const API_URL = `https://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
-
-  const getDetail = useCallback(async () => {
-    await axios.get(`${API_URL}`).then(res => setItem(res.data))
-  }, [API_URL])
-
-  useEffect(() => {
-    if(id && id > 0) {
-      getDetail();
-    }
-  }, [id, getDetail]);
-
+function ProdDetail({ item }) {
   return (
-    item && <ProdItem item={item}/>
+    <>
+      {item && (
+        <>
+          <Head>
+            <title>{item.name}</title>
+            <meta name="description" content={item.description} />
+          </Head>
+          <ProdItem item={item} />
+        </>
+      )}
+    </>
   );
 }
 
 export default ProdDetail;
+
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  const apiUrl = `https://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+  const res = await axios.get(apiUrl);
+  const data = res.data;
+
+  return {
+    props: {
+      item: data,
+    },
+  };
+}
