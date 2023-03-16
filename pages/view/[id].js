@@ -2,7 +2,8 @@ import axios from "axios";
 import Head from "next/head";
 import ProdItem from "../../src/components/ProdItem";
 
-function ProdDetail({ item }) {
+function ProdDetail({ item, mode }) {
+  console.log({mode})
   return (
     <>
       {item && (
@@ -11,6 +12,7 @@ function ProdDetail({ item }) {
             <title>{item.name}</title>
             <meta name="description" content={item.description} />
           </Head>
+          {mode} 환경입니다.
           <ProdItem item={item} />
         </>
       )}
@@ -29,6 +31,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       item: data,
+      mode: process.env.MODE_NAME
     },
   };
 }
