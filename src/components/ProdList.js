@@ -10,8 +10,9 @@ function ProdList({ prodList }) {
         <Grid.Row>
           {prodList.map((item) => (
             <Grid.Column key={item.id}>
-              <Link href={`/view/[id]`} as={`/view/${item.id}`}>
+              <Link href={`/detail/[id]`} as={`/detail/${item.id}`}>
                 <div className={styles.wrap}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.image_link}
                     alt={item.name}

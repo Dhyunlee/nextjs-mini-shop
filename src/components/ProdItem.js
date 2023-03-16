@@ -18,6 +18,7 @@ function ProdItem({ item }) {
     <>
       <div className={styles.wrap}>
         <div className={styles.img_item}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={image_link} alt={name} />
         </div>
         <div className={styles.info_item}>
