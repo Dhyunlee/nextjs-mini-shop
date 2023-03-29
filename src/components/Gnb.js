@@ -13,7 +13,7 @@ function Gnb() {
   }
 
   const onClickGoLink = (e, data) => {
-    console.log('Link', data)
+    console.log("Link", data);
     switch (data.name) {
       case "home":
         routerPush("/");
@@ -21,23 +21,19 @@ function Gnb() {
       case "about":
         routerPush("/about");
         return;
+      case "admin":
+        routerPush("/admin");
+        return;
       default:
-        console.error('올바르지 않는 경로');
+        console.error("올바르지 않는 경로");
     }
   };
 
   return (
     <Menu inverted>
-      <Menu.Item
-        name="home"
-        active={activeItem === "home"}
-        onClick={onClickGoLink}
-      />
-      <Menu.Item
-        name="about"
-        active={activeItem === "about"}
-        onClick={onClickGoLink}
-      />
+      <Menu.Item name="home" active={activeItem === "home"} onClick={onClickGoLink} />
+      <Menu.Item name="about" active={activeItem === "about"} onClick={onClickGoLink} />
+      <Menu.Item name="admin" active={activeItem === "admin"} onClick={onClickGoLink} />
     </Menu>
   );
 }
